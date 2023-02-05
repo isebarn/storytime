@@ -14,6 +14,12 @@ export const mutations = {
     state.stories = payload
   },
 
+  // set image for a story in the stories list
+  setStoryImageUrl: (state, payload) => {
+    let story = state.stories.find(story => story.id === payload.id)
+    story.image = `https://isebarn-vid.s3.eu-west-2.amazonaws.com/${story.id}/original`
+  },
+
   resetNewStory: (state) => {
     state.newStory = {
       name: '',
@@ -80,7 +86,23 @@ export const actions = {
 
   setStory ({ commit }, story) {
     commit('story', story)
-  },  
+  },
+
+  // updateStoryImage commits the url of the passed story and patches the story
+  async updateStoryImage ({ commit, state, dispatch }, story) {
+    commit('setStoryImageUrl', story)
+    story = state.stories.find(x => x.id === story.id)
+    await this.$axios.patch("story", {id: story.id, image: story.image})
+    dispatch('getStories')
+  },
+
+  // updateChapterImage commits the url of the passed chapter and patches the chapter
+  async updateChapterImage ({ commit, state, dispatch }, chapter) {
+    chapter.image = `https://isebarn-vid.s3.eu-west-2.amazonaws.com/${chapter.id}/original`
+    chapter = state.story.chapters.find(x => x.id === chapter.id)
+    await this.$axios.patch("chapter", {id: chapter.id, image: chapter.image})
+    dispatch('getStories')
+  },
 
   async getStories ({ commit }) {
     const {data} = await this.$axios.get("story?$include=chapters,chapters__choices")

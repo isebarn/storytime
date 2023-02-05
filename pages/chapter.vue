@@ -11,6 +11,16 @@
                     placeholder=""
                     @blur="patchChapter"/>
             </div>
+            <v-avatar
+                  class="ma-3"
+                  size="125"
+                  tile
+                >
+                  <v-img v-if="chapter.image" v-bind:src="chapter.image"></v-img>
+                </v-avatar>
+                <div>
+                    <v-file-input  hide-input @change="uploader($event, chapter)"/>
+                </div>             
         </v-card> 
         <Editor/>
         <v-data-table
@@ -76,7 +86,18 @@ export default {
     },
 
     methods: {
-        ...mapActions("stories", ['patchChapatchChapterpter', 'postChoice', 'patchChoice', 'setChoice']),
+        ...mapActions("stories", ['patchChapter', 'postChoice', 'patchChoice', 'setChoice', 'updateChapterImage']),
+
+        async uploader (file, chapter) {
+            var formData = new FormData();
+            formData.append("file", file);            
+            await this.$axios.post(`aws_s3/images/image/${chapter.id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            this.updateChapterImage(chapter)
+        },
     },
 }
 </script>
