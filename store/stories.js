@@ -56,7 +56,7 @@ export const mutations = {
 
   // add choice to chapter
   addChoice: (state, payload) => {
-    state.chapter.choices.push(payload)
+    state.chapter.choices.push({...payload, chapter: null})
   },
 
   // set choice
@@ -152,7 +152,8 @@ export const actions = {
 
   async postChoice ({ commit, state, dispatch }) {
     const {data} = await this.$axios.post("choice", {
-      text: "New Choice"
+      text: "New Choice",
+      chapter: null
     })
 
     commit('addChoice', data)

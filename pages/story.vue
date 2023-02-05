@@ -21,6 +21,7 @@
                         <v-text-field
                             v-model="name"
                             label="Edit Title"
+                            @blur="patchStory"
                             placeholder=""/>
                     </div>
                 </div>
@@ -72,7 +73,7 @@ export default {
     },
 
     methods: {
-        ...mapActions("stories", ['postChapter', 'setChapter', 'deleteChapter', 'updateStoryImage']),
+        ...mapActions("stories", ['postChapter', 'setChapter', 'deleteChapter', 'updateStoryImage', 'patchStory']),
 
         editChapter (item) {
             this.setChapter(item)
