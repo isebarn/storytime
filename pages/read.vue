@@ -17,6 +17,13 @@
                     {{ choice.text }}
                 </v-btn>
             </v-card-actions>
+            <v-avatar
+                  class="ma-3"
+                  size="125"
+                  tile
+                >
+                  <v-img v-if="chapter.image" v-bind:src="chapter.image"></v-img>
+                </v-avatar>            
         </v-card>
     </v-container>
 </template>
