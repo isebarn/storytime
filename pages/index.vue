@@ -1,66 +1,42 @@
 <template>
-  <v-container>
-    <v-data-table
-      :headers="headers"
-      :items="stories"
-      :items-per-page="5"
-      class="elevation-1"
-      @click:row="editStory">
-      <template v-slot:body.append>
-        <td colspan="100%">
-          <v-btn
-            color="primary"
-            class="white--text"
-            @click="postStory"
-          >
-            Add Story
-          </v-btn>
-        </td>
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <v-icon small @click="deleteStory(item)">
-          mdi-delete
-        </v-icon>
-      </template>
-    </v-data-table>
-  </v-container>
+    <v-container>
+        <!-- make a list of cards that show stories by their names and the image -->
+        <v-card v-for="story in stories" :key="story.id">
+            <v-img
+                :src="`https://isebarn-vid.s3.eu-west-2.amazonaws.com/${story.id}/original`"
+                aspect-ratio="2.75"
+            ></v-img>
+            <v-card-title class="headline">{{ story.name }}</v-card-title>
+            <v-card-actions>
+                <v-btn color="primary" text @click=" editStory(story)" >Edit</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-container>
 </template>
 
 <script>
-import { mapFields } from 'vuex-map-fields'
-import { mapActions } from 'vuex'
+// import vuex and vuex-map-fields
+import { mapFields } from 'vuex-map-fields';
+import { mapGetter, mapActions } from 'vuex';
+
 export default {
-  name: 'IndexPage',
-
-  data () {
-    return {
-      headers: [
-        {
-          text: 'Title',
-          align: 'start',
-          sortable: false,
-          value: 'name'
-        },
-        { text: 'Actions', value: 'actions', sortable: false}
-      ]
-    }
-  },
-
-  computed: {
-    ...mapFields("stories", ['stories'])
-  },
-
-  methods: {
-    ...mapActions("stories", ['getStories', 'postStory', 'setStory', 'setChapter', 'saveNewChapter', 'updateStory', 'deleteStory']),
-
-    editStory (item) {
-      this.setStory(item)
-      this.$router.push({ name: 'story', params: { id: item.id } })
+    computed: {
+        ...mapFields('data', ['stories']),
     },
-  },
 
-  beforeMount () {
-    this.getStories()
-  }
+    // methods to get the stories from the database
+    methods: {
+        ...mapActions('data', ['getStories']),
+
+        // edit story pushes test/story and passes the story id to path
+        editStory(story) {
+            this.$router.push({ path: `/storypage`, query: { id: story.id } });
+        }, 
+    },
+
+    // when the page is mounted, get the stories
+    created() {
+        this.getStories();
+    },
 }
 </script>

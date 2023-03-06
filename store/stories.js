@@ -84,6 +84,12 @@ export const getters = {
 
 export const actions = {
 
+  // getStoryById calls axios to get a story by id and commits it to the store
+  async fetchStory ({ commit }, id) {
+    const {data} = await this.$axios.get(`story/${id}?$include=chapters,chapters__choices`)
+    commit('story', data)
+  },
+
   setStory ({ commit }, story) {
     commit('story', story)
   },
