@@ -11,6 +11,13 @@
                 <v-btn color="primary" text @click=" editStory(story)" >Edit</v-btn>
             </v-card-actions>
         </v-card>
+        <!-- another card to create a new story by calling createStory -->
+        <v-card>
+            <v-card-title class="headline">Create new story</v-card-title>
+            <v-card-actions>
+                <v-btn color="primary" text @click=" createStory()" >Create</v-btn>
+            </v-card-actions>
+        </v-card>
     </v-container>
 </template>
 
@@ -26,7 +33,7 @@ export default {
 
     // methods to get the stories from the database
     methods: {
-        ...mapActions('data', ['getStories']),
+        ...mapActions('data', ['getStories', 'createStory']),
 
         // edit story pushes test/story and passes the story id to path
         editStory(story) {

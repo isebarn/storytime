@@ -77,7 +77,13 @@ export const actions = {
                 'Content-Type': 'multipart/form-data'
             }
         })
-    },      
+    },   
+    
+    // action to create a new story and then call the getStories action to update the stories state
+    async createStory({ dispatch }) {
+        await this.$axios.$post('/story', { name: 'Story ' + (this.state.data.stories.length + 1)});
+        dispatch('getStories');
+    },
 
     // action to get stories
     async getStories({ commit }) {
