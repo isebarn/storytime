@@ -1,10 +1,10 @@
 <template>
     <v-container v-if="story">
         <!-- card that shows the title (name) of the story and a list of chapters (name and image) in v-list-item -->
-        <v-card>
+        <v-card class="mx-auto" max-width="400">
             <v-img
                 :src="`https://isebarn-vid.s3.eu-west-2.amazonaws.com/${story.id}/original`"
-                aspect-ratio="2.75"
+                aspect-ratio=1.777
             ></v-img>
             <!-- v-file-input to upload an image and call uploader -->
             <v-file-input

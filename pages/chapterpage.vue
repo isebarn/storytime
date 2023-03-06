@@ -1,9 +1,9 @@
 <template>
     <v-container v-if="chapter">
-        <v-card>
+        <v-card class="mx-auto" max-width="400">
             <v-img
                 :src="`https://isebarn-vid.s3.eu-west-2.amazonaws.com/${chapter.id}/original`"
-                aspect-ratio="2.75"
+                aspect-ratio=1.777
             ></v-img>
             <v-file-input
                 label="Upload image"
@@ -20,7 +20,7 @@
             <v-card-text>
                 <v-textarea
                     v-model="content"
-                    label="Chapter Description"
+                    label="Chapter Content"
                     @input="updateChapterTimeout"
                 ></v-textarea>
             </v-card-text>
