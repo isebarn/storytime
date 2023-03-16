@@ -1,6 +1,9 @@
 <template>
-    <v-container v-if="chapter">
-        <v-card class="mx-auto" max-width="400">
+    <v-container v-if="chapter" fluid>
+      <v-card style="padding: 12px">
+        <v-row dense>
+          <v-col cols="6">
+            <v-card flat>
             <v-img
                 :src="`https://isebarn-vid.s3.eu-west-2.amazonaws.com/${chapter.id}/original`"
                 aspect-ratio=1.777
@@ -24,6 +27,10 @@
                     @input="updateChapterTimeout"
                 ></v-textarea>
             </v-card-text>
+        </v-card>
+          </v-col>
+          <v-col cols="6">
+            <v-card flat>
             <h1>Choices</h1>
             <!-- v-list of choices. On the left there is the choice.txt and on the right there is a v-combobox where you select choice.chapter -->
             <v-list>
@@ -57,6 +64,9 @@
                 </v-list-item>
             </v-list>
         </v-card>
+          </v-col>
+        </v-row>
+      </v-card>
     </v-container>
 </template>
 
@@ -76,7 +86,7 @@ export default {
     // methods to get the chapter from the store
     methods: {
         ...mapActions('data', ['getChapter', 'getStory', 'uploader', 'updateChapter', 'addChoice', 'updateChoice']),
-        
+
         // updateChapterTimeout updates the chapter 1 sec after user has stopped typing
         updateChapterTimeout() {
             clearTimeout(this.timeout);

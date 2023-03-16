@@ -1,7 +1,9 @@
 <template>
-    <v-container v-if="story">
-        <!-- card that shows the title (name) of the story and a list of chapters (name and image) in v-list-item -->
-        <v-card class="mx-auto" max-width="400">
+    <v-container v-if="story" fluid>
+      <v-card style="padding: 12px">
+      <v-row dense>
+        <v-col cols="4">
+          <v-card flat>
             <v-img
                 :src="`https://isebarn-vid.s3.eu-west-2.amazonaws.com/${story.id}/original`"
                 aspect-ratio=1.777
@@ -20,6 +22,10 @@
                 dense
                 @input="updateStoryNameTimeout"
             ></v-text-field>
+          </v-card>
+        </v-col>
+        <v-col cols="8">
+          <v-card flat>
             <v-card-text v-if="story?.chapters">
                 <h1>Chapters</h1>
                 <!-- iterate story.chapters. show on the left the image, then name, and on the right have edit/delete icons -->
@@ -52,6 +58,10 @@
                 </v-list-item>
             </v-card-text>
         </v-card>
+        </v-col>
+      </v-row>
+    </v-card>
+
     </v-container>
 </template>
 
@@ -71,7 +81,7 @@ export default {
     // methods to get the story from the database
     methods: {
         ...mapActions('data', ['getStory', 'uploader', 'updateStoryName', 'deleteChapter', 'addChapter']),
-        
+
         // updateStoryNameTimeout updates the story 1 sec after user has stopped typing
         updateStoryNameTimeout() {
             clearTimeout(this.timeout);
