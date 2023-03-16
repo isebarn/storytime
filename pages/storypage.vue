@@ -27,7 +27,7 @@
         <v-col cols="8">
           <v-card flat>
             <v-card-text v-if="story?.chapters">
-                <h1>Chapters</h1>
+                <h1>Pages</h1>
                 <!-- iterate story.chapters. show on the left the image, then name, and on the right have edit/delete icons -->
                 <v-list-item v-for="chapter in story.chapters" :key="chapter.id">
                     <v-list-item-avatar>
