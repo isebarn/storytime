@@ -71,14 +71,14 @@ export const actions = {
 
     async uploader ({ commit }, {file, id}) {
         var formData = new FormData();
-        formData.append("file", file);  
+        formData.append("file", file);
         await this.$axios.post(`aws_s3/images/image/${id}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         })
-    },   
-    
+    },
+
     // action to create a new story and then call the getStories action to update the stories state
     async createStory({ dispatch }) {
         await this.$axios.$post('/story', { name: 'Story ' + (this.state.data.stories.length + 1)});
@@ -139,6 +139,13 @@ export const actions = {
     // updateChoice updates the text of a choice using patch and the choice.chapter and updates the chapter state
     async updateChoice({ dispatch }, {chapter, choice}) {
         await this.$axios.$patch(`/choice/${choice.id}`, { text: choice.text, chapter: choice.chapter.id });
+        dispatch('getChapter', chapter.id);
+    },
+
+    // deleteChoice deletes the choice and removes it from the chapter object and re-sets the chapter state
+    async deleteChoice({ dispatch }, {chapter, choice}) {
+        await this.$axios.$delete(`/choice/${choice.id}`);
+        await this.$axios.$patch(`/chapter/${chapter.id}`, { choices: chapter.choices.filter(c => c.id != choice.id) });
         dispatch('getChapter', chapter.id);
     }
 };

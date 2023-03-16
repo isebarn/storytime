@@ -33,26 +33,30 @@
             <v-card flat>
             <h1>Choices</h1>
             <!-- v-list of choices. On the left there is the choice.txt and on the right there is a v-combobox where you select choice.chapter -->
-            <v-list>
+            <v-list lines="two">
                 <v-list-item v-for="choice in choices" :key="choice.id">
-                    <v-list-item-content>
-                        <v-text-field
-                            v-model="choice.text"
-                            label="Choice"
-                            @input="updateChoiceTimeout({chapter, choice})"
-                        ></v-text-field>
-                    </v-list-item-content>
-                    <v-list-item-action>
-                        <v-combobox
-                            v-if="story"
-                            v-model="choice.chapter"
-                            :items="story.chapters"
-                            item-text="name"
-                            item-value="id"
-                            label="Chapter"
-                            @change="updateChoice({chapter, choice})"
-                        ></v-combobox>
-                    </v-list-item-action>
+                  <v-text-field
+                      v-model="choice.text"
+                      label="Choice"
+                      outlined
+                      @input="updateChoiceTimeout({chapter, choice})"
+                  ></v-text-field>
+                  <v-combobox
+                      v-if="story"
+                      v-model="choice.chapter"
+                      :items="story.chapters"
+                      item-text="name"
+                      item-value="id"
+                      outlined
+                      label="Chapter"
+                      @change="updateChoice({chapter, choice})"
+                  ></v-combobox>
+                  <!-- button to delete -->
+                  <v-list-item-action>
+                      <v-btn icon @click="deleteChoice({chapter, choice})">
+                          <v-icon>mdi-delete</v-icon>
+                      </v-btn>
+                  </v-list-item-action>
                 </v-list-item>
                 <!-- add choice button as a v-list-item that only has a plus icon -->
                 <v-list-item @click="addChoice(chapter)">
@@ -85,7 +89,7 @@ export default {
 
     // methods to get the chapter from the store
     methods: {
-        ...mapActions('data', ['getChapter', 'getStory', 'uploader', 'updateChapter', 'addChoice', 'updateChoice']),
+        ...mapActions('data', ['getChapter', 'getStory', 'uploader', 'updateChapter', 'addChoice', 'updateChoice', 'deleteChoice']),
 
         // updateChapterTimeout updates the chapter 1 sec after user has stopped typing
         updateChapterTimeout() {

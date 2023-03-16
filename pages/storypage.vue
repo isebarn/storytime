@@ -92,6 +92,7 @@ export default {
 
         // edit chapter pushes test/chapter and passes the chapter id as a query parameter
         editChapter(chapter) {
+            console.log(1)
             this.$router.push({ path: `/chapterpage`, query: { id: chapter.id, story: this.story.id } });
         },
 

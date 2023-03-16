@@ -20,7 +20,7 @@
             ><v-card-title class="headline" style="color: white" v-text="story.name"/></v-img>
 
             <v-card-actions>
-                <v-btn color="primary" text @click=" editStory(story)" >Edit</v-btn>
+                <v-btn color="primary" icon @click=" editStory(story)" ><v-icon>mdi-pencil</v-icon></v-btn>
             </v-card-actions>
         </v-card>
         <!-- card with a centered button button to createStory -->
