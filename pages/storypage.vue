@@ -43,9 +43,36 @@
                         <v-btn icon @click="editChapter(chapter)">
                             <v-icon>mdi-pencil</v-icon>
                         </v-btn>
-                        <v-btn icon @click="deleteChapter({story, chapter})">
+                        <v-btn icon @click="dialog = true">
                             <v-icon>mdi-delete</v-icon>
                         </v-btn>
+                        <v-dialog
+                          v-model="dialog"
+                          width="auto"
+                        >
+                          <!-- card with a confirmation for deletion -->
+                          <v-card>
+                            <v-card-title class="headline">Are you sure you want to delete this chapter?</v-card-title>
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                color="blue darken-1"
+                                text
+                                @click="dialog = false"
+                              >
+                                Cancel
+                              </v-btn>
+                              <v-btn
+                                color="blue darken-1"
+                                text
+                                @click="deleteChapter({story, chapter});dialog = false"
+                              >
+                                Delete
+                              </v-btn>
+                              <v-spacer></v-spacer>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
                     </v-list-item-action>
                 </v-list-item>
                 <!-- add chapter button as a v-list-item that only has a plus icon -->
@@ -73,6 +100,13 @@ import { mapActions } from 'vuex';
 
 export default {
     name: "storypage",
+
+    data () {
+      return {
+        dialog: false
+      }
+    },
+
     computed: {
         // get the story from the database
         ...mapFields('data', ['story', 'story.name']),

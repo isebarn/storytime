@@ -53,9 +53,23 @@
                   ></v-combobox>
                   <!-- button to delete -->
                   <v-list-item-action>
-                      <v-btn icon @click="deleteChoice({chapter, choice})">
+                      <v-btn icon @click="dialog = true">
                           <v-icon>mdi-delete</v-icon>
                       </v-btn>
+                      <v-dialog
+                          v-model="dialog"
+                          width="auto"
+                        >
+                          <v-card>
+                            <v-card-title class="headline">Are you sure you want to delete this choice?</v-card-title>
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                              <v-btn color="blue darken-1" text @click="dialog = false">Cancel</v-btn>
+                              <v-btn color="blue darken-1" text @click="deleteChoice({chapter, choice}); dialog=false">OK</v-btn>
+                              <v-spacer></v-spacer>
+                            </v-card-actions>
+                          </v-card>
+                      </v-dialog>
                   </v-list-item-action>
                 </v-list-item>
                 <!-- add choice button as a v-list-item that only has a plus icon -->
@@ -81,6 +95,13 @@ import { mapFields, mapMultiRowFields } from 'vuex-map-fields';
 import { mapActions } from 'vuex';
 
 export default {
+
+    data () {
+      return {
+        dialog: false,
+      }
+    },
+
     computed: {
         // get the chapter from the store
         ...mapFields('data', ['chapter', 'chapter.name', 'chapter.content', 'story']),
