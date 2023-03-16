@@ -138,7 +138,7 @@ export const actions = {
 
     // updateChoice updates the text of a choice using patch and the choice.chapter and updates the chapter state
     async updateChoice({ dispatch }, {chapter, choice}) {
-        await this.$axios.$patch(`/choice/${choice.id}`, { text: choice.text, chapter: choice.chapter.id });
+        await this.$axios.$patch(`/choice/${choice.id}`, { text: choice.text, chapter: choice.chapter.id, name: choice.name });
         dispatch('getChapter', chapter.id);
     },
 

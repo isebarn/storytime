@@ -41,6 +41,13 @@
                       outlined
                       @input="updateChoiceTimeout({chapter, choice})"
                   ></v-text-field>
+                  <!-- v-text-field for choice.name -->
+                  <v-text-field
+                      v-model="choice.name"
+                      label="Choice Name"
+                      outlined
+                      @input="updateChoiceTimeout({chapter, choice})"
+                  ></v-text-field>
                   <v-combobox
                       v-if="story"
                       v-model="choice.chapter"
